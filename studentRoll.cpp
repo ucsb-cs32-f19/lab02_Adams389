@@ -6,20 +6,37 @@ StudentRoll::StudentRoll() {
 }
 
 void StudentRoll::insertAtTail(const Student &s) {
-  // STUB
+  tail->s = s;
+  tail->next = NULL;
+  tail = tail->nest;
 }
 
 std::string StudentRoll::toString() const {
-  return "stub";
+  for(Node* i = head; i != NULL; i = i->next){
+    i->s.toString();
+    if(i->next != NULL){
+      sdt::cout<<",";
+    }
+  }
 }
 
 StudentRoll::StudentRoll(const StudentRoll &orig) {
-  // STUB
-  head = tail = NULL;
+  Node* iter = this->head;
+  iter->head = orig->head;
+  for (Node*i = orig.head; i != NULL; i = i->next){
+    iter->next = i->next;
+    iter = iter->next;
+  }
+  tail = NULL;
 }
 
 StudentRoll::~StudentRoll() {
-  // STUB
+  Node* cur = head;
+  while(cur!=NULL)(
+    Node*next = cur->next;
+    delete cur;
+    cur = next;
+  }
 }
 
 StudentRoll & StudentRoll::operator =(const StudentRoll &right ) {
@@ -32,7 +49,15 @@ StudentRoll & StudentRoll::operator =(const StudentRoll &right ) {
 
   // TODO... Here is where there is code missing that you need to 
   // fill in...
-
+  delete this;
+  Node* iter = this->head;
+  Node*i = right->head;
+  while(i != NULL){
+    iter->s = i->s;
+    iter = iter->next;
+    i = i->next;
+  }
+  iter->next = NULL;
 
   // KEEP THE CODE BELOW THIS LINE
   // Overloaded = should end with this line, despite what the textbook says.
