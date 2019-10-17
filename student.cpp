@@ -32,6 +32,7 @@ Student::Student(const Student &orig) {
 
 Student::~Student() {
     delete name;
+    perm = NULL;
 }
 
 Student & Student::operator=(const Student &right) {
