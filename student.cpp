@@ -4,7 +4,7 @@
 #include <sstream>
 Student::Student(const char * const name, int perm) {
   this->setName(name);
-  this->setPerm(perm);
+  this->perm = perm;
 }
 
 int Student::getPerm() const {
@@ -16,43 +16,53 @@ const char * const Student::getName() const {
 }
 
 void Student::setPerm(const int permNumber) {
-    this->perm = permNumber;
+  this->perm = permNumber;
 }
 
 void Student::setName(const char * const name) {
+  if(this->name==""){
+    delete this->name;
+  }
   this->name = new char[strlen(name)+1];
   strcpy(this->name,name);
 }
 
 
 Student::Student(const Student &orig) {
+  if(this->name==""){
+    delete this->name;
+  }
   this->setName(orig.name);
   this->setPerm(orig.perm);
 }
 
 Student::~Student() {
-    delete name;
-    perm = NULL;
+  if(this -> name==""){
+    delete this->name;
+  }
+  perm = NULL;
 }
 
 Student & Student::operator=(const Student &right) {
 
   // The next two lines are standard, and you should keep them.
-  // They avoid problems with self-assignment where you might free up 
+  // They avoid problems with self-assignment where you might free up
   // memory before you copy from it.  (e.g. x = x)
 
-  if (&right == this) 
+  if (&right == this)
     return (*this);
 
-  // TODO... Here is where there is code missing that you need to 
+  // TODO... Here is where there is code missing that you need to
   // fill in...
-    this->setPerm(right.perm);
+  if(this->name==""){
     delete this->name;
-    this->setName(right.name);
+  }
+  this->setPerm(right.perm);
+  this->setName(right.name);
 
   // KEEP THE CODE BELOW THIS LINE
   // Overloaded = should end with this line, despite what the textbook says.
-  return (*this); 
+  return (*this);
 
 }
 
