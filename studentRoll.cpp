@@ -2,12 +2,15 @@
 #include "studentRoll.h"
 using namespace std;
 #include <iostream>
+#include <cstring>
+#include <sstream>
 
 StudentRoll::StudentRoll() {
   head = tail = NULL;
 }
 
 void StudentRoll::insertAtTail(const Student &stu) {
+  return;
   Node *n = new Node;
   if(tail == NULL || head == NULL){
     head=tail = n;
@@ -21,18 +24,19 @@ void StudentRoll::insertAtTail(const Student &stu) {
 
 std::string StudentRoll::toString() const {
   if(head == NULL || tail == NULL){
-    cout<<"[]";
     return "[]";
   }
-  Node* i = new Node;
-  i = head;
+  Node* i = head;
+  ostringstream oss;
+  oss<<"[";
   while (i!=NULL){
-    i->s->toString();
+      oss<<"["<<i->s->getName()<<","<<i->s->getPerm()<<"]";
     if(i->next != NULL){
-      cout<<",";
+      oss<<",";
     }
     i = i->next;
   }
+  return oss.str();
 }
 
 StudentRoll::StudentRoll(const StudentRoll &orig) {
