@@ -9,19 +9,29 @@ StudentRoll::StudentRoll() {
 
 void StudentRoll::insertAtTail(const Student &stu) {
   Node *n = new Node;
-  tail->next = n;
-  tail = n;
-  n->next = NULL;
+  if(tail == NULL || head == NULL){
+    head=tail = n;
+  }
+  else {tail->next = n;}
   n->s->setPerm(stu.getPerm());
   n->s->setName( stu.getName());
+  n->next = NULL;
+  tail = n;
 }
 
 std::string StudentRoll::toString() const {
-  for(Node* i = head; i != NULL; i = i->next){
+  if(head == NULL || tail == NULL){
+    cout<<"[]";
+    return "[]";
+  }
+  Node* i = new Node;
+  i = head;
+  while (i!=NULL){
     i->s->toString();
     if(i->next != NULL){
       cout<<",";
     }
+    i = i->next;
   }
 }
 
