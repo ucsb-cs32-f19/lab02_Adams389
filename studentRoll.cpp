@@ -9,18 +9,20 @@ StudentRoll::StudentRoll() {
   head = tail = NULL;
 }
 
-void StudentRoll::insertAtTail(const Student &stu) {
-  return;
+void StudentRoll::insertAtTail(const Student &s) {
   Node *n = new Node;
-  if(tail == NULL || head == NULL){
-    head=tail = n;
+  if(!tail||!head){
+    tail = head = n;
   }
-  else {tail->next = n;}
-  n->s->setPerm(stu.getPerm());
-  n->s->setName( stu.getName());
+  else{tail->next = n;}
+  
+  n->s = new Student(s.getName(), s.getPerm());
+
   n->next = NULL;
   tail = n;
+
 }
+
 
 std::string StudentRoll::toString() const {
   if(head == NULL || tail == NULL){
@@ -28,6 +30,7 @@ std::string StudentRoll::toString() const {
   }
   Node* i = head;
   ostringstream oss;
+
   oss<<"[";
   while (i!=NULL){
       oss<<"["<<i->s->getName()<<","<<i->s->getPerm()<<"]";
@@ -36,17 +39,24 @@ std::string StudentRoll::toString() const {
     }
     i = i->next;
   }
+  oss<<"]";
   return oss.str();
 }
 
 StudentRoll::StudentRoll(const StudentRoll &orig) {
-  Node* iter = this->head;
-  head = orig.head;
-  for (Node*i = orig.head; i != NULL; i = i->next){
-    iter->next = i->next;
+  if(this->head){
+      //delete this;
+  }
+  if(!orig.head){
+    return;
+  }
+  Node* iter = head;
+    for (Node*i = orig.head; i != NULL; i = i->next){
+    iter = new Node;
+    iter->s = new Student(i->s->getName(), i->s->getPerm());
+    tail = iter;
     iter = iter->next;
   }
-  tail = NULL;
 }
 
 StudentRoll::~StudentRoll() {
@@ -68,15 +78,20 @@ StudentRoll & StudentRoll::operator =(const StudentRoll &right ) {
 
   // TODO... Here is where there is code missing that you need to
   // fill in...
-  delete this;
+  if(this->head){
+    delete this;
+  }
+  
   Node* iter = this->head;
   Node*i = right.head;
   while(i != NULL){
-    iter->s = i->s;
+    iter = new Node;
+    iter->s = new Student(i->s->getName(), i->s->getPerm());
+    tail = iter;
     iter = iter->next;
     i = i->next;
   }
-  iter->next = NULL;
+  iter = NULL;
 
   // KEEP THE CODE BELOW THIS LINE
   // Overloaded = should end with this line, despite what the textbook says.
