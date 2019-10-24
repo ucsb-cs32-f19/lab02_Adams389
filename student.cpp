@@ -20,9 +20,7 @@ void Student::setPerm(const int permNumber) {
 }
 
 void Student::setName(const char * const name) {
-  if(this->name){
-   // delete this->name;
-  }
+
   this->name = new char[strlen(name)+1];
   strcpy(this->name,name);
 }
@@ -35,9 +33,9 @@ Student::Student(const Student &orig) {
 }
 
 Student::~Student() {
-  if(this->name!=nullptr){
-    delete this->name;
-  }
+  
+  delete this->name;
+  
   perm = 0;
 }
 
@@ -55,8 +53,8 @@ Student & Student::operator=(const Student &right) {
   if(this->name!=nullptr){
     delete this->name;
   }
-  this->setPerm(right.perm);
-  this->setName(right.name);
+  this->setPerm(right.getPerm());
+  this->setName(right.getName());
 
   // KEEP THE CODE BELOW THIS LINE
   // Overloaded = should end with this line, despite what the textbook says.
